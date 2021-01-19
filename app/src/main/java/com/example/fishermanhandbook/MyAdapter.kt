@@ -4,28 +4,31 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import java.util.ArrayList
 
-class MyAdapter (listArray:ArrayList<ListItem>, context: Context): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(arrayList: ArrayList<ListItem>, context: Context): RecyclerView.Adapter<MyAdapter.ViewHolder> () {
 
-    var listArrayR = listArray
+    var arrayListR = arrayList
     var contextR = context
 
-    class ViewHolder(view : View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
         val tvContent = view.findViewById<TextView>(R.id.tvContent)
-        val imageView = view.findViewById<ImageView>(R.id.imageView)
+        val image = view.findViewById<ImageView>(R.id.imageView)
 
-        fun bind(listItem:ListItem, context: Context) {
+        fun bind(listItem: ListItem, context: Context) {
             tvTitle.text = listItem.titleText
             tvContent.text = listItem.contentText
-            imageView.setImageResource(listItem.image_id)
-            itemView.setOnClickListener(){
-                Toast.makeText(context,"Pressed : ${tvTitle.text}", Toast.LENGTH_SHORT).show()
-            }
+            image.setImageResource(listItem.image_id)
+            itemView.setOnClickListener(View.OnClickListener {
+                Toast.makeText(context,"Pressed ${tvTitle.text}",Toast.LENGTH_SHORT).show()
+            })
         }
     }
 
@@ -35,11 +38,11 @@ class MyAdapter (listArray:ArrayList<ListItem>, context: Context): RecyclerView.
     }
 
     override fun getItemCount(): Int {
-        return listArrayR.size
+       return arrayListR.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var listItem = listArrayR.get(position)
+        val listItem = arrayListR.get(position)
         holder.bind(listItem, contextR)
     }
 
